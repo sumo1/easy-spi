@@ -1,7 +1,7 @@
-package com.easyspi;
+package io.github.easyspi;
 
-import com.easyspi.ability.TestAbility;
-import com.easyspi.meta.BaseModel;
+import io.github.easyspi.ability.TestAbility;
+import io.github.easyspi.meta.BaseModel;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

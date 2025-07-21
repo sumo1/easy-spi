@@ -1,6 +1,6 @@
-package com.easyspi.ext;
+package io.github.easyspi.ext;
 
-import com.easyspi.meta.TemplateExt;
+import io.github.easyspi.meta.TemplateExt;
 
 @TemplateExt(bizCode = "modelA", scenario = "scenarioA")
 public class ModelAWithScenario extends DefaultTestAbilityExt {

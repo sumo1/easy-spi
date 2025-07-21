@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.easyspi</groupId>
+    <groupId>io.github.sumo1</groupId>
     <artifactId>easy-spi</artifactId>
     <version>1.0-SNAPSHOT</version>
 
@@ -106,7 +106,54 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-gpg-plugin</artifactId>
+              <version>3.0.1</version>
+              <executions>
+                <execution>
+                  <id>sign-artifacts</id>
+                  <phase>verify</phase>
+                  <goals>
+                    <goal>sign</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.8.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+
+  <licenses>
+      <license>
+          <name>The MIT License</name>
+          <url>https://opensource.org/licenses/MIT</url>
+          <distribution>repo</distribution>
+      </license>
+  </licenses>
+
+  <scm>
+      <connection>scm:git:git://github.com/sumo1/easy-spi.git</connection>
+      <developerConnection>scm:git:ssh://github.com:sumo1/easy-spi.git</developerConnection>
+      <url>https://github.com/sumo1/easy-spi</url>
+  </scm>
+
+  <developers>
+      <developer>
+          <id>sumo1</id>
+          <name>sumo1</name>
+          <email>sumoneptune@gmail.com</email>
+      </developer>
+  </developers>
+
 
 </project>

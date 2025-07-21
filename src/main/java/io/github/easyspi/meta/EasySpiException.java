@@ -1,4 +1,4 @@
-package com.easyspi.meta;
+package io.github.easyspi.meta;
 
 public class EasySpiException extends RuntimeException {
 

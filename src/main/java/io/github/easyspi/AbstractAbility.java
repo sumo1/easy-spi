@@ -1,13 +1,13 @@
-package com.easyspi;
+package io.github.easyspi;
 
-import com.easyspi.factory.ExtBeanFactory;
-import com.easyspi.meta.*;
+import io.github.easyspi.factory.ExtBeanFactory;
+import io.github.easyspi.meta.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import static com.easyspi.factory.ExtBeanFactory.BIZCODE_SPLITTER;
+import static io.github.easyspi.factory.ExtBeanFactory.BIZCODE_SPLITTER;
 
 public abstract class AbstractAbility<BusinessExt extends IBusinessExt> implements IAbility<BusinessExt> {
 

@@ -1,7 +1,7 @@
-package com.easyspi.ext;
+package io.github.easyspi.ext;
 
-import com.easyspi.meta.DefaultTemplateExt;
-import com.easyspi.meta.IBusinessExt;
+import io.github.easyspi.meta.DefaultTemplateExt;
+import io.github.easyspi.meta.IBusinessExt;
 
 @DefaultTemplateExt
 public class DefaultTestAbilityExt implements IBusinessExt {

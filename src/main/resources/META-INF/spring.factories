@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration = com.easyspi.EasySpiBeanAutoConfig
+org.springframework.boot.autoconfigure.EnableAutoConfiguration = io.github.easyspi.EasySpiBeanAutoConfig

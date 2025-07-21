@@ -47,7 +47,7 @@
 
 ```xml
 <dependency>
-  <groupId>com.easyspi</groupId>
+  <groupId>io.github.sumo1</groupId>
   <artifactId>easy-spi</artifactId>
   <version>1.0.0</version>
 </dependency>
@@ -59,7 +59,7 @@
 
 ```java
 @Configuration
-@ComponentScan("com.easyspi")
+@ComponentScan("io.github.easyspi")
 public class EasySpiConfig {}
 ```
 
