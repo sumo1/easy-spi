@@ -18,42 +18,42 @@ public class EasySpiCoreTest {
 
     @Test
     public void testDefaultExtensionRegistrationAndExecution() {
-        String result = ability.executorSPI(null);
+        String result = ability.execute(null, ext -> ext.getName());
         Assert.assertEquals("DefaultTestAbilityExt", result);
     }
 
     @Test
     public void testCustomExtensionWithBizCode() {
         BaseModel model = BaseModel.valueOf("modelA");
-        String result = ability.executorSPI(model);
+        String result = ability.execute(model, ext -> ext.getName());
         Assert.assertEquals("ModelAExt", result);
     }
 
     @Test
     public void testCustomExtensionWithBizCode2() {
         BaseModel model = BaseModel.valueOf("modelB");
-        String result = ability.executorSPI(model);
+        String result = ability.execute(model, ext -> ext.getName());
         Assert.assertEquals("ModelBExt", result);
     }
 
     @Test
     public void testCustomExtensionWithScenario() {
         BaseModel model = BaseModel.valueOf("modelA", "scenarioA");
-        String result = ability.executorSPI(model);
+        String result = ability.execute(model, ext -> ext.getName());
         Assert.assertEquals("ModelAWithScenario", result);
     }
 
     @Test
     public void testCustomExtensionWithScenarioFallback() {
         BaseModel model = BaseModel.valueOf("modelA", "scenarioB");
-        String result = ability.executorSPI(model);
+        String result = ability.execute(model, ext -> ext.getName());
         Assert.assertEquals("ModelAExt", result);
     }
 
     @Test
     public void testFallbackToDefault() {
         BaseModel model = BaseModel.valueOf("nonExistentBiz");
-        String result = ability.executorSPI(model);
+        String result = ability.execute(model, ext -> ext.getName());
         Assert.assertEquals("DefaultTestAbilityExt", result);
     }
 

@@ -10,7 +10,4 @@ import io.github.easyspi.meta.BaseModel;
 @Service
 public class TestAbility extends AbstractAbility<DefaultTestAbilityExt> {
 
-    public String executorSPI(BaseModel model) {
-        return execute(model, ext -> ext.getName());
-    }
 }

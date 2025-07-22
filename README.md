@@ -102,9 +102,7 @@ public class BizcodeAndScenarioExt extends DefaultExt {
 ```java
 @Service
 public class FooAbility extends AbstractAbility<DefaultExt> {
-    public String exec(BaseModel model) {
-        return execute(model, ext -> ext.doSomething());
-    }
+
 }
 ```
 
@@ -158,9 +156,6 @@ AbstractAbility --> BaseModel
 @Service
 public class TestAbility extends AbstractAbility<DefaultTestAbilityExt> {
 
-    public String executorSPI(BaseModel model) {
-        return execute(model, ext -> ext.getName());
-    }
 }
 ```
 
@@ -214,42 +209,42 @@ public class ModelBExt extends DefaultTestAbilityExt {
 ```java
 @Test
     public void testDefaultExtensionRegistrationAndExecution() {
-        String result = ability.executorSPI(null);
+        String result = execute(model, ext -> ext.getName());
         Assert.assertEquals("DefaultTestAbilityExt", result);
     }
 
     @Test
     public void testCustomExtensionWithBizCode() {
         BaseModel model = BaseModel.valueOf("modelA");
-        String result = ability.executorSPI(model);
+        String result = execute(model, ext -> ext.getName());
         Assert.assertEquals("ModelAExt", result);
     }
 
     @Test
     public void testCustomExtensionWithBizCode2() {
         BaseModel model = BaseModel.valueOf("modelB");
-        String result = ability.executorSPI(model);
+        String result = execute(model, ext -> ext.getName());
         Assert.assertEquals("ModelBExt", result);
     }
 
     @Test
     public void testCustomExtensionWithScenario() {
         BaseModel model = BaseModel.valueOf("modelA", "scenarioA");
-        String result = ability.executorSPI(model);
+        String result = execute(model, ext -> ext.getName());
         Assert.assertEquals("ModelAWithScenario", result);
     }
 
     @Test
     public void testCustomExtensionWithScenarioFallback() {
         BaseModel model = BaseModel.valueOf("modelA", "scenarioB");
-        String result = ability.executorSPI(model);
+        String result = execute(model, ext -> ext.getName());
         Assert.assertEquals("ModelAExt", result);
     }
 
     @Test
     public void testFallbackToDefault() {
         BaseModel model = BaseModel.valueOf("nonExistentBiz");
-        String result = ability.executorSPI(model);
+        String result = execute(model, ext -> ext.getName());
         Assert.assertEquals("DefaultTestAbilityExt", result);
     }
 
