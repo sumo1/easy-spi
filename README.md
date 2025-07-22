@@ -100,7 +100,7 @@ public class BizcodeAndScenarioExt extends DefaultExt {
 ### 5️⃣ 定义能力类
 
 ```java
-@DefaultTemplateExt
+@Service
 public class FooAbility extends AbstractAbility<DefaultExt> {
     public String exec(BaseModel model) {
         return execute(model, ext -> ext.doSomething());
@@ -155,7 +155,7 @@ AbstractAbility --> BaseModel
 
 ## 🧪 典型测试
 ```java
-@DefaultTemplateExt
+@Service
 public class TestAbility extends AbstractAbility<DefaultTestAbilityExt> {
 
     public String executorSPI(BaseModel model) {
