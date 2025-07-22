@@ -6,7 +6,11 @@
 
     <groupId>io.github.sumo1</groupId>
     <artifactId>easy-spi</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
+
+    <name>easy-spi</name>
+    <description>A lightweight SPI extension framework for Spring</description>
+    <url>https://github.com/sumo1/easy-spi</url>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -119,6 +123,12 @@
                   </goals>
                 </execution>
               </executions>
+              <configuration>
+                <gpgArguments>
+                  <arg>--pinentry-mode</arg>
+                  <arg>loopback</arg>
+                </gpgArguments>
+              </configuration>
             </plugin>
             <plugin>
                 <groupId>org.sonatype.central</groupId>
@@ -127,7 +137,22 @@
                 <extensions>true</extensions>
                 <configuration>
                     <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                    <waitUntil>published</waitUntil>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

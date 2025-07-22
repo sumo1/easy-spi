@@ -71,6 +71,7 @@ public class EasySpiConfig {}
 @DefaultTemplateExt
 public class DefaultExt implements IBusinessExt {
     // 默认实现
+    public void doSomething();
 }
 ```
 
@@ -79,9 +80,18 @@ public class DefaultExt implements IBusinessExt {
 ### 4️⃣ 定义自定义扩展
 
 ```java
-@TemplateExt(bizCode = "foo", scenario = "bar")
-public class FooBarExt extends DefaultExt {
+@TemplateExt(bizCode = "bizcodeA")
+public class BizcodeExt extends DefaultExt {
     // 覆盖默认
+    public void doSomething();
+}
+```
+
+```java
+@TemplateExt(bizCode = "bizcodeA", scenario = "morning")
+public class BizcodeAndScenarioExt extends DefaultExt {
+    // 覆盖默认
+    public void doSomething();
 }
 ```
 
@@ -106,7 +116,7 @@ public class FooAbility extends AbstractAbility<DefaultExt> {
 @Autowired
 private FooAbility fooAbility;
 
-String result = fooAbility.exec(BaseModel.valueOf("foo", "bar"));
+String result = fooAbility.exec(BaseModel.valueOf("bizcodeA", "morning"));
 ```
 
 ---
@@ -115,8 +125,8 @@ String result = fooAbility.exec(BaseModel.valueOf("foo", "bar"));
 
 | 输入 | 优先匹配 | 回退 | 默认 | 命中示例 |
 |------|----------|------|------|----------|
-| `bizCode#scenario` | ✅ |      |      | FooBarExt |
-| `bizCode` | 🚑 |      |      | FooExt |
+| `bizCode#scenario` | ✅ |      |      | BizcodeAndScenarioExt |
+| `bizCode` | 🚑 |      |      | BizcodeExt |
 | 无匹配 |      |      | ✅ | DefaultExt |
 
 ---
@@ -144,21 +154,111 @@ AbstractAbility --> BaseModel
 ---
 
 ## 🧪 典型测试
+```java
+@DefaultTemplateExt
+public class TestAbility extends AbstractAbility<DefaultTestAbilityExt> {
+
+    public String executorSPI(BaseModel model) {
+        return execute(model, ext -> ext.getName());
+    }
+}
+```
+
+```java
+@DefaultTemplateExt
+public class DefaultTestAbilityExt implements IBusinessExt {
+
+    public String getName() {
+        return "DefaultTestAbilityExt";
+    }
+
+}
+```
+
+```java
+@TemplateExt(bizCode = "modelA")
+public class ModelAExt extends DefaultTestAbilityExt {
+
+    @Override
+    public String getName() {
+        return "ModelAExt";
+    }
+
+}
+```
+
+```java
+@TemplateExt(bizCode = "modelA", scenario = "scenarioA")
+public class ModelAWithScenario extends DefaultTestAbilityExt {
+
+    @Override
+    public String getName() {
+        return "ModelAWithScenario";
+    }
+
+}
+```
+
+```java
+@TemplateExt(bizCode = "modelB")
+public class ModelBExt extends DefaultTestAbilityExt {
+
+    @Override
+    public String getName() {
+        return "ModelBExt";
+    }
+
+}
+```
 
 ```java
 @Test
-public void testCustomRoute() {
-  BaseModel model = BaseModel.valueOf("foo", "bar");
-  String result = fooAbility.exec(model);
-  assertEquals("FooBarExt", result);
-}
+    public void testDefaultExtensionRegistrationAndExecution() {
+        String result = ability.executorSPI(null);
+        Assert.assertEquals("DefaultTestAbilityExt", result);
+    }
 
-@Test
-public void testFallback() {
-  BaseModel model = BaseModel.valueOf("unknown");
-  String result = fooAbility.exec(model);
-  assertEquals("DefaultExt", result);
-}
+    @Test
+    public void testCustomExtensionWithBizCode() {
+        BaseModel model = BaseModel.valueOf("modelA");
+        String result = ability.executorSPI(model);
+        Assert.assertEquals("ModelAExt", result);
+    }
+
+    @Test
+    public void testCustomExtensionWithBizCode2() {
+        BaseModel model = BaseModel.valueOf("modelB");
+        String result = ability.executorSPI(model);
+        Assert.assertEquals("ModelBExt", result);
+    }
+
+    @Test
+    public void testCustomExtensionWithScenario() {
+        BaseModel model = BaseModel.valueOf("modelA", "scenarioA");
+        String result = ability.executorSPI(model);
+        Assert.assertEquals("ModelAWithScenario", result);
+    }
+
+    @Test
+    public void testCustomExtensionWithScenarioFallback() {
+        BaseModel model = BaseModel.valueOf("modelA", "scenarioB");
+        String result = ability.executorSPI(model);
+        Assert.assertEquals("ModelAExt", result);
+    }
+
+    @Test
+    public void testFallbackToDefault() {
+        BaseModel model = BaseModel.valueOf("nonExistentBiz");
+        String result = ability.executorSPI(model);
+        Assert.assertEquals("DefaultTestAbilityExt", result);
+    }
+
+    @Test
+    public void testExecuteVoid() {
+        final String[] result = new String[1];
+        ability.executeVoid(null, ext -> result[0] = ext.getName());
+        Assert.assertEquals("DefaultTestAbilityExt", result[0]);
+    }
 ```
 
 ---
